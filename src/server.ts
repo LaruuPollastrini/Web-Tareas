@@ -16,7 +16,7 @@ app.get("/", (req, res) => {
   res.send("¡Servidor funcionando!");
 });
 
-app.use("/", tareaRoutes);
+app.use("/tareas", tareaRoutes);
 
 connectMongoDB()
   .then(() => {
