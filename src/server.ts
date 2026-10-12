@@ -3,6 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import tareaRoutes from "./Routes/tareaRoutes.js";
 import { connectMongoDB } from "./config/db.js";
+import authRoutes from "./Routes/authRoutes.js";
 
 dotenv.config();
 
@@ -17,6 +18,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/tareas", tareaRoutes);
+app.use("/auth", authRoutes);
 
 connectMongoDB()
   .then(() => {
