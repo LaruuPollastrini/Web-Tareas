@@ -5,12 +5,14 @@ import {
   actualizarTarea,
   borrarTarea,
 } from "../controllers/TareaControllers.js";
+import { validateBody } from "../middlewares/validate.js";
+import { createTareaSchema, updateTareaSchema } from "../schemas/tarea.schema.js";
 
 const router = Router();
 
-router.post("/tareas", crearTarea);
-router.get("/tareas", obtenerTareas);
-router.put("/tareas/:id", actualizarTarea);
-router.delete("/tareas/:id", borrarTarea);
+router.get("/", obtenerTareas);
+router.post("/", validateBody(createTareaSchema), crearTarea);
+router.put("/:id", validateBody(updateTareaSchema), actualizarTarea);
+router.delete("/:id", borrarTarea);
 
 export default router;
