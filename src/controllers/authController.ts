@@ -67,3 +67,30 @@ export const login = async (req: Request, res: Response) => {
     res.status(500).json({ error: "No se pudo iniciar sesion" });
   }
 };
+
+// Solo admin: lista todos los usuarios (sin la contraseña)
+export const listarUsuarios = async (_req: Request, res: Response) => {
+  try {
+    const usuarios = await User.find().select("-password").sort({ createdAt: -1 });
+    res.json(usuarios);
+  } catch (error) {
+    res.status(500).json({ error: "No se pudieron cargar los usuarios" });
+  }
+};
+
+// Solo admin: elimina un usuario (no puede eliminarse a si mismo)
+export const borrarUsuario = async (req: Request, res: Response) => {
+  try {
+    const id = req.params.id;
+    if (id === res.locals.user.id) {
+      return res.status(400).json({ error: "No podes eliminar tu propia cuenta" });
+    }
+    const borrado = await User.findByIdAndDelete(id);
+    if (!borrado) {
+      return res.status(404).json({ error: "Usuario no encontrado" });
+    }
+    res.json({ mensaje: "Usuario eliminado" });
+  } catch (error) {
+    res.status(400).json({ error: "No se pudo eliminar el usuario" });
+  }
+};
