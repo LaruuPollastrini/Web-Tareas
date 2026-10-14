@@ -27,6 +27,7 @@ Respuestas del backend: sin token devuelve **401**; con token pero sin el rol re
 ### 1. Backend
 
 ```
+cd backend
 npm install
 cp .env.example .env
 ```
@@ -53,14 +54,14 @@ La aplicación queda en `http://localhost:5173`. El frontend consume el backend 
 
 ## Usuarios de prueba
 
-Los usuarios se crean con `POST /auth/register`. Para tener uno de cada rol:
+Los usuarios se crean con `POST /auth/register`, eligiendo cada quien su propia contraseña (mínimo 6 caracteres). Para tener uno de cada rol:
 
 ```json
-{ "nombre": "Admin", "email": "admin@test.com", "password": "123456", "rol": "admin" }
+{ "nombre": "Admin", "email": "admin@ejemplo.com", "password": "ELEGIR_UNA_CONTRASENA", "rol": "admin" }
 ```
 
 ```json
-{ "nombre": "Lara", "email": "lara@test.com", "password": "123456" }
+{ "nombre": "Usuario", "email": "usuario@ejemplo.com", "password": "ELEGIR_UNA_CONTRASENA" }
 ```
 
 Si no se indica `rol`, el usuario se crea con rol `user`. Dejar elegir el rol al registrarse es solo para facilitar la prueba de la consigna; en una aplicación real el rol no debería poder elegirse.
@@ -68,14 +69,15 @@ Si no se indica `rol`, el usuario se crea con rol `user`. Dejar elegir el rol al
 ## Estructura
 
 ```
-src/
-  config/        conexión a MongoDB
-  controllers/   lógica de tareas y autenticación
-  middlewares/   validación (Zod), verificarToken y requerirRol
-  models/        Tarea y User
-  Routes/        tareaRoutes y authRoutes
-  schemas/       esquemas de validación con Zod
-  server.ts      punto de entrada
+backend/
+  src/
+    config/        conexión a MongoDB
+    controllers/   lógica de tareas y autenticación
+    middlewares/   validación (Zod), verificarToken y requerirRol
+    models/        Tarea y User
+    Routes/        tareaRoutes y authRoutes
+    schemas/       esquemas de validación con Zod
+    server.ts      punto de entrada
 frontend/
-  src/           AuthContext, ProtectedRoute, páginas y estilos
+  src/             AuthContext, ProtectedRoute, páginas y estilos
 ```
